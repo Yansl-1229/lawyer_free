@@ -506,7 +506,7 @@ def chat_case_strategy_stream(message, history, request: gr.Request):
                                 time.sleep(0.1)
 
                         summary = f"{final_content}\n✅ 案例分析已完成并保存！\n📁 文件路径：{analysis_filename}\n\n💡 您可以：\n1. 继续提问补充信息\n2. 开始新的咨询\n3. 查看保存的分析报告"
-                        saved_conversation_file = save_case_conversation_history()
+                        saved_conversation_file = save_case_conversation_history(request)
                         if saved_conversation_file:
                             summary += f"\n📁 对话历史已保存：{saved_conversation_file}"
                         history[-1] = (message, summary)
@@ -594,9 +594,9 @@ def detect_user_intent(user_input):
     
     case_strategy_keywords = [
         '案件咨询', '案件策略', '我的案子', '我遇到', '发生了',
-        '公司辞退', '被开除', '被炒', '工资拖欠', '加班费',
-        '劳动纠纷', '劳动争议', '工伤', '赔偿', '补偿',
-        '仲裁', '起诉', '维权', '我该怎么办', '帮我分析',
+        '公司辞退', '被开除', '被炒', '工资拖欠', '加班费', '被开了',
+        '劳动纠纷', '劳动争议', '工伤', '赔偿', '补偿', '离职', '项目',
+        '仲裁', '起诉', '维权', '我该怎么办', '帮我分析', '工作',
         '我的情况', '具体案例', '实际问题', '遇到问题', '我工作', '我的工作' 
     ]
     
@@ -786,24 +786,6 @@ def unified_chat(message, history, request: gr.Request, files=None):
             history.append((message, clarification))
             save_user_chat_history(user_id, history, system_state)
             yield history
-
-# def initialize_user_session(request: gr.Request):
-#     """Initialize user session when page loads."""
-#     user_id, system_state = get_or_create_user_state(request)
-    
-#     # Try to load existing chat history
-#     loaded_history, loaded_state = load_user_chat_history(user_id)
-    
-#     if loaded_history is not None and len(loaded_history) > 0:
-#         # Restore previous state
-#         if loaded_state:
-#             user_states[user_id] = loaded_state
-#         return loaded_history
-#     else:
-#         # Return initial prompt for new users
-#         initial_history = [("", get_initial_prompt())]
-#         save_user_chat_history(user_id, initial_history, system_state)
-#         return initial_history
 
 def initialize_user_session(request: gr.Request=None):
     """Initialize user session when page loads."""

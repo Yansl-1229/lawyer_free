@@ -6,6 +6,7 @@ import prompts
 import dashscope
 from dashscope import Generation
 import os
+from datetime import datetime
 
 class ContractAnalyzer:
     def __init__(self):
@@ -144,6 +145,7 @@ class CaseAnalysisGenerator:
     def generate_case_analysis(self, conversation_content: str) -> str:
         prompt = f"""
 你是一位资深的劳动法律师。你的任务是根据下方提供的“对话内容”，直接为你的当事人撰写一份专业的法律分析与后续行动建议。
+目前北京时间为：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 **核心要求 - 语气与称谓（请务必遵守）：**
 请全程使用第二人称“您”来称呼当事人，以律师直接对客户提供咨询和建议的口吻进行撰写。在分析内容中，请将“李某”或类似的第三方称谓替换为“您”。
